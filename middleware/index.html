@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content="George-kiki">
+    <!-- Open Graph Data -->
+    <meta property="og:title" content="手写koa2-middleware实现">
+    <meta property="og:description" content>
+    <meta property="og:site_name" content="George-kiki">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://github.com/George-kiki">
+    
+        <link rel="alternate" href="/atom.xml" title="George-kiki" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+
+    <!-- Site Title -->
+    <title>George-kiki</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="/css/style.light.css">
+
+    <!-- Google Analytics -->
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.dode.top/Hitalk.min.js"></script>
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/animation_sea_bg.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">手写koa2-middleware实现</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/George-kiki">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+    <div class="container typo">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-info text-muted">
+                    
+                        <!-- Author -->
+                        <span class="author info">By George-kiki</span>
+                    
+                    <!-- Date -->
+                    <span class="date-time info">On
+            <span class="date">2019-09-06</span>
+            <span class="time">15:50:17</span>
+          </span>
+                    
+                        <!--  Categories  -->
+                        <span class="categories info">Under 
+
+<a href="/categories/coding/">coding</a>
+</span>
+                    
+                </div>
+                <!-- Tags -->
+                
+                    <div class="post-tags text-muted">
+                        Tags: 
+
+<a class="tag" href="/tags/NodeJS/">#NodeJS</a> <a class="tag" href="/tags/Koa2/">#Koa2</a>
+
+
+                    </div>
+                
+                <!-- Post Main Content -->
+                <div class="post-content">
+                    <h3 id="洋葱圈模型图"><a href="#洋葱圈模型图" class="headerlink" title="洋葱圈模型图"></a>洋葱圈模型图</h3><p><img src="https://my-blog-img.oss-cn-shenzhen.aliyuncs.com/koa2-middleware/koa.png?Expires=1567817980&OSSAccessKeyId=TMP.hVZhSKirDvXhvo3ym1ChnCHxx9BVKAT9KvtUM9VnZiNutvYNZDwbhT5qu5aBkMwM6C2vK1s9nqU2MZGABDTDW2um3Mi1mssrc91TU96Yh63nUHyWeenUK76wwdD53E.tmp&Signature=pxmV4MuPSrZER9ZGf19Mi%2Fvb6Zg%3D" alt>  </p>
+<p><img src="https://my-blog-img.oss-cn-shenzhen.aliyuncs.com/koa2-middleware/koa1.png?Expires=1567818043&OSSAccessKeyId=TMP.hVZhSKirDvXhvo3ym1ChnCHxx9BVKAT9KvtUM9VnZiNutvYNZDwbhT5qu5aBkMwM6C2vK1s9nqU2MZGABDTDW2um3Mi1mssrc91TU96Yh63nUHyWeenUK76wwdD53E.tmp&Signature=XfqFxEh4cxH3mb2g1NsUlLi%2BdJI%3D" alt><br>这两张网上找的图片，很清晰的说明了一个请求是如果通过中间件生成响应的。</p>
+<h5 id="我们来看一个koa2小的demo，来看看koa2中间件工作流程"><a href="#我们来看一个koa2小的demo，来看看koa2中间件工作流程" class="headerlink" title="我们来看一个koa2小的demo，来看看koa2中间件工作流程"></a>我们来看一个koa2小的demo，来看看koa2中间件工作流程</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> koa();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*#1*/</span> </span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next)=&gt;&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/*#2*/</span> </span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">/*#3*/</span> </span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*response*/</span> </span><br><span class="line">app.use(<span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  ctx.res.end(<span class="string">'This is like koa2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">5999</span>,()=&gt;&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'启动了'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器访问localhost:5999,然后查看编辑器的控制台<br><img src="https://my-blog-img.oss-cn-shenzhen.aliyuncs.com/koa2-middleware/runtime.png?Expires=1567819298&OSSAccessKeyId=TMP.hVZhSKirDvXhvo3ym1ChnCHxx9BVKAT9KvtUM9VnZiNutvYNZDwbhT5qu5aBkMwM6C2vK1s9nqU2MZGABDTDW2um3Mi1mssrc91TU96Yh63nUHyWeenUK76wwdD53E.tmp&Signature=uot9%2Bn5Au19xtgYDoHntLwxnAuI%3D" alt><br>通过这个demo发现了，当中间件遇到了next就执行了下一个中间件<br><img src="https://my-blog-img.oss-cn-shenzhen.aliyuncs.com/koa2-middleware/code_photo.png?Expires=1567820218&OSSAccessKeyId=TMP.hVZhSKirDvXhvo3ym1ChnCHxx9BVKAT9KvtUM9VnZiNutvYNZDwbhT5qu5aBkMwM6C2vK1s9nqU2MZGABDTDW2um3Mi1mssrc91TU96Yh63nUHyWeenUK76wwdD53E.tmp&Signature=89I%2FZua9O%2FV6HZ0sH8Y4DULFuPU%3D" alt>  </p>
+<h4 id="怎么用代码去实现这个中间件执行呢？"><a href="#怎么用代码去实现这个中间件执行呢？" class="headerlink" title="怎么用代码去实现这个中间件执行呢？"></a>怎么用代码去实现这个中间件执行呢？</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span> (<span class="params">middlewareList</span>) </span>&#123;  <span class="comment">/*组合中间件函数*/</span> </span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">ctx</span>) =&gt;</span> &#123;  <span class="comment">/*返回ctx函数*/</span> </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span> (<span class="params">i</span>) </span>&#123; <span class="comment">/*next 执行函数*/</span> </span><br><span class="line">      <span class="keyword">const</span> fn = middlewareList[i] <span class="comment">/*执行第几个中间*/</span> </span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve( <span class="comment">/*保持async await 这种语法模式 所以返回的都是Promise函数*/</span> </span><br><span class="line">          fn(ctx,dispatch.bind(<span class="literal">null</span>, i + <span class="number">1</span>)) <span class="comment">/*执行完第一个中间件后开始就是第一个中间+1的顺序往后执行 所以这里的 参数变成了 i+1*/</span> </span><br><span class="line">        )</span><br><span class="line">      &#125;<span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(e)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dispatch(<span class="number">0</span>)  <span class="comment">/*初始化开始执行第一个中间件*/</span> </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KoaLike</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> () &#123; <span class="comment">/*初始化注册中间件数组*/</span> </span><br><span class="line">    <span class="keyword">this</span>.middlewareList = []</span><br><span class="line">  &#125;</span><br><span class="line">  use (fn) &#123; <span class="comment">/*注册中间件 fn就是被注册的中间件*/</span> </span><br><span class="line">    <span class="keyword">this</span>.middlewareList.push(fn)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span> <span class="comment">/*返回this是为链式调用 比如 app.use(xxx).use(aaa)*/</span> </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> createContent (req, res ) &#123; <span class="comment">/*合并req,res 并返回ctx*/</span></span><br><span class="line">    <span class="keyword">const</span> ctx = &#123;</span><br><span class="line">      req,</span><br><span class="line">      res</span><br><span class="line">    &#125;</span><br><span class="line">    ctx.query = req.query</span><br><span class="line">    <span class="keyword">return</span> ctx</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> handleReq(ctx, fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> fn(ctx)</span><br><span class="line">  &#125;</span><br><span class="line">  callback () &#123;</span><br><span class="line">    <span class="keyword">const</span> fn = compose(<span class="keyword">this</span>.middlewareList) <span class="comment">/*拿到第一个执行的中间件*/</span> </span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">req,res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> ctx = KoaLike.createContent(req,res) <span class="comment">/*拿到合并的ctx*/</span> </span><br><span class="line">      <span class="keyword">return</span>  KoaLike.handleReq(ctx,fn) <span class="comment">/*返回当前执行的中间件*/</span> </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  listen (...args) &#123;</span><br><span class="line">    <span class="keyword">const</span> server = http.createServer(<span class="keyword">this</span>.callback())</span><br><span class="line">    server.listen(...args)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = KoaLike</span><br></pre></td></tr></table></figure>
+
+<p>看完上面这段代码是不是觉得koa2中间件的实现非常巧妙，如果本文哪里说得不对请留言指出。</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="comment"></div>
+</article>
+<script>
+  new Hitalk({
+    el: '#comment' ,
+    appId: 'VnAjBQDKjiiQGPcIkYu4TGDm-gzGzoHsz',
+    appKey: '1T0fJve6IS0KxGXnCXg6luIl',
+    placeholder: '快来评论吧',
+    path:window.location.pathname,
+    avatar:'mm'
+  });
+</script>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          萌萌哒博客 <a target="_blank" href="https://github.com/George-kiki">George-kiki</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
