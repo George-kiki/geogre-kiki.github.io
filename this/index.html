@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content="George-kiki">
+    <!-- Open Graph Data -->
+    <meta property="og:title" content="this">
+    <meta property="og:description" content>
+    <meta property="og:site_name" content="George-kiki">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://github.com/George-kiki">
+    
+        <link rel="alternate" href="/atom.xml" title="George-kiki" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+
+    <!-- Site Title -->
+    <title>George-kiki</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="/css/style.light.css">
+
+    <!-- Google Analytics -->
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.dode.top/Hitalk.min.js"></script>
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/animation_sea_bg.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">this</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/George-kiki">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+    <div class="container typo">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-info text-muted">
+                    
+                        <!-- Author -->
+                        <span class="author info">By George-kiki</span>
+                    
+                    <!-- Date -->
+                    <span class="date-time info">On
+            <span class="date">2019-09-15</span>
+            <span class="time">14:29:03</span>
+          </span>
+                    
+                </div>
+                <!-- Tags -->
+                
+                    <div class="post-tags text-muted">
+                        Tags: 
+
+<a class="tag" href="/tags/JavaScript/">#JavaScript</a>
+
+
+                    </div>
+                
+                <!-- Post Main Content -->
+                <div class="post-content">
+                    <h4 id="this关键字，用着很舒服，那么你真的了解它吗？"><a href="#this关键字，用着很舒服，那么你真的了解它吗？" class="headerlink" title="this关键字，用着很舒服，那么你真的了解它吗？"></a>this关键字，用着很舒服，那么你真的了解它吗？</h4><p>this是在函数被调用时确定的，它的指向取决于函数调用的地方，而不是它被声明的地方（箭头函数除外）。<br>当一个函数被调用时，会创建一个执行上下文，它包含函数在哪里被调用、函数的调用方式、传入的参数等信息，this就是这个记录的一个属性，它会在函数执行时用到。</p>
+<h4 id="默认绑定"><a href="#默认绑定" class="headerlink" title="默认绑定"></a>默认绑定</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  x: <span class="number">1</span>,</span><br><span class="line">  add: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> b = obj.add</span><br><span class="line"><span class="keyword">let</span> c = obj</span><br><span class="line">b() <span class="comment">// undefined</span></span><br><span class="line">c.add() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="../img/this/this_1.png" alt><br>上图是obj.add赋值给变量b。执行b函数时为什么拿到得是undefined呢？<br>因为b函数的this指向的是window，window对象中没有x属性所以是undefined。<br>为什么指向的是window呢？<br>因为this的指向取决于函数调用的地方，b函数执行相当于是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.x)</span><br><span class="line">&#125;</span><br><span class="line">b() <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>b函数是在全局作用域中调用的，所以this指向的是window<br>在来看看c变量<br><img src="../img/this/this_2.png" alt><br>add函数是在c的作用域中调用的，所以this指向的是c</p>
+<h4 id="隐式绑定"><a href="#隐式绑定" class="headerlink" title="隐式绑定"></a>隐式绑定</h4><p>当一个函数调用时有上下文对象，隐式绑定会将上下文对象绑定到函数中的this。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  a: <span class="number">2</span>,</span><br><span class="line">  b: add</span><br><span class="line">&#125;</span><br><span class="line">obj.b() <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="显式绑定"><a href="#显式绑定" class="headerlink" title="显式绑定"></a>显式绑定</h4><p>使用apply、call、bind 方法，在函数调用时通过参数的形式传入绑定的this。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  a: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line">add.call(obj) <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<p>call方法调用时做了什么？模拟写一个call方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.byCall = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">  context = context || <span class="built_in">window</span></span><br><span class="line">  context.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">let</span> result</span><br><span class="line">  <span class="keyword">let</span> arg = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  result = context.fn(...arg)</span><br><span class="line">  <span class="keyword">delete</span> context.fn</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125; </span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 其实就是将调用call的函数丢进要绑定的this对象中</span></span><br><span class="line"><span class="comment">  * context = &#123;</span></span><br><span class="line"><span class="comment">  *    fn: function () &#123;</span></span><br><span class="line"><span class="comment">  *   &#125;</span></span><br><span class="line"><span class="comment">  * &#125;</span></span><br><span class="line"><span class="comment">  * */</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h4><p>使用new来调用函数，会执行下面的操作：  </p>
+<ul>
+<li>1：创建一个新的对象</li>
+<li>2: 构造函数的prototype被赋值给了这个新对象的<strong>proto</strong></li>
+<li>3: 新对象赋值给当前的this</li>
+<li>4: 如果函数没有返回其他对象,那么new表达式中的函数调用会自动返回这个新对象<br>一个简单的例子:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="keyword">new</span> add()</span><br><span class="line">a <span class="comment">/*打印的是构造对象add*/</span> </span><br><span class="line">add() <span class="comment">/*打印的是window对象*/</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>模拟写一个new方法,看看new操作符做了啥操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">news</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = &#123;&#125;</span><br><span class="line">  <span class="keyword">if</span> (context.prototype !== <span class="literal">null</span>) &#123;</span><br><span class="line">    result.__proto__ = context.prototype</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> other = context.apply(result, <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>))</span><br><span class="line">  <span class="keyword">if</span> ((<span class="keyword">typeof</span> other === <span class="string">'object'</span> || <span class="keyword">typeof</span> other === <span class="string">'function'</span>) &amp;&amp; other !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> other </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Add</span> (<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = x</span><br><span class="line">  <span class="keyword">this</span>.y = y</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> num = <span class="keyword">new</span> Add(<span class="number">5</span>,<span class="number">6</span>) <span class="comment">// Add &#123;x: 5, y: 6&#125;</span></span><br><span class="line"><span class="keyword">let</span> res = news(Add,<span class="number">5</span>,<span class="number">6</span>)<span class="comment">// Add &#123;x: 5, y: 6&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>new将需要构造的函数原型(prototype)赋值给了新对象的<strong>proto</strong>,然后返回新对象</p>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>上面说的4种绑定规则,其实它们是有一个先后顺序的,如下:<br>new &gt; 显式绑定 &gt; 隐式绑定 &gt; 默认绑定</p>
+<h4 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h4><p>箭头函数的和普通函数得区别就在于:</p>
+<ul>
+<li><p>1：箭头函数没有自己的this，而是通过箭头函数最近一层的非箭头函数决定的，所以箭头函数的this指向在箭头函数被定义的时候就已经确定了，之后无法改变。  </p>
+</li>
+<li><p>2：箭头函数没有arguments，但是可以通过ES6的展开运算符获取。</p>
+</li>
+<li><p>2：箭头函数没有构造函数constructor，不能使用new<br>🌰1：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'10'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a1</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;, <span class="number">2000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">  &#125;, <span class="number">2000</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a1.call(&#123;<span class="attr">a</span>: <span class="number">110</span>&#125;)  <span class="comment">// 10</span></span><br><span class="line">a2.call(&#123;<span class="attr">a</span>: <span class="number">110</span>&#125;) <span class="comment">// 110</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>上面这个例子,a1中的setTimeout中使用普通函数,2秒后执行函数,函数是在全局的作用域中执行的,所以this指向的window拿到的是10。<br>但是a2函数中的setTimeout中使用的箭头函数，这个箭头函数在this确定时就定义了，指向的a2函数的this,当a2.call执行时，call改变了this.a的对象属性，所以输出了110。</p>
+<p>🌰2：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="function">(<span class="params">num</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">arguments</span>)</span><br><span class="line">&#125;</span><br><span class="line">arr(<span class="number">1</span>) <span class="comment">/** 报错 Uncaught ReferenceError: arguments is not defined</span></span><br><span class="line"><span class="comment">                 at arr (&lt;anonymous&gt;:2:15)</span></span><br><span class="line"><span class="comment">                 at &lt;anonymous&gt;:1:1**/</span></span><br></pre></td></tr></table></figure>
+
+<p>因为全局环境是没有arguments对象的，所以报错内容 arguments is not defined</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="function">(<span class="params">...num</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(num)</span><br><span class="line">&#125;</span><br><span class="line">arr(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)  <span class="comment">// [1,2,3]</span></span><br></pre></td></tr></table></figure>
+
+
+<p>🌰3：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> arr() <span class="comment">/** arr is not a constructor **/</span></span><br></pre></td></tr></table></figure>
+
+<p>以上就是我对this比较基础的理解，如有漏，请评论补充。</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="comment"></div>
+</article>
+<script>
+  new Hitalk({
+    el: '#comment' ,
+    appId: 'VnAjBQDKjiiQGPcIkYu4TGDm-gzGzoHsz',
+    appKey: '1T0fJve6IS0KxGXnCXg6luIl',
+    placeholder: '快来评论吧',
+    path:window.location.pathname,
+    avatar:'mm'
+  });
+</script>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          萌萌哒博客 <a target="_blank" href="https://github.com/George-kiki">George-kiki</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
