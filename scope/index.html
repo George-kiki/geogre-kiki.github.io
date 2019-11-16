@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content="George-kiki">
+    <!-- Open Graph Data -->
+    <meta property="og:title" content="作用域">
+    <meta property="og:description" content>
+    <meta property="og:site_name" content="George-kiki">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://github.com/George-kiki">
+    
+        <link rel="alternate" href="/atom.xml" title="George-kiki" type="application/atom+xml">
+    
+    
+        <link rel="icon" href="/favicon.png">
+    
+
+    <!-- Site Title -->
+    <title>George-kiki</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="/css/style.light.css">
+
+    <!-- Google Analytics -->
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.dode.top/Hitalk.min.js"></script>
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/animation_sea_bg.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">作用域</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/George-kiki">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+    <div class="container typo">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-info text-muted">
+                    
+                        <!-- Author -->
+                        <span class="author info">By George-kiki</span>
+                    
+                    <!-- Date -->
+                    <span class="date-time info">On
+            <span class="date">2019-11-15</span>
+            <span class="time">15:12:12</span>
+          </span>
+                    
+                </div>
+                <!-- Tags -->
+                
+                    <div class="post-tags text-muted">
+                        Tags: 
+
+<a class="tag" href="/tags/ES6/">#ES6</a> <a class="tag" href="/tags/JavaScript/">#JavaScript</a>
+
+
+                    </div>
+                
+                <!-- Post Main Content -->
+                <div class="post-content">
+                    <h3 id="什么是作用域"><a href="#什么是作用域" class="headerlink" title="什么是作用域?"></a>什么是作用域?</h3><p>相信了解过操作系统的同学应该知道,就是在变量中存储值，并且能读取和修改此值。事实上，在变量中存储值和取出值的能力，给程序赋予了状态。 如果没有这样的概念，一个程序虽然可以执行一些任务，但是它们将会受到极大的限制而且不会非常有趣。 但是这些变量该存储在哪，又给如何读取？为了完成这个目标，需要制定一些规则，这个规则就是：作用域。</p>
+<h3 id="JavaScript中有哪些常用的作用域"><a href="#JavaScript中有哪些常用的作用域" class="headerlink" title="JavaScript中有哪些常用的作用域?"></a>JavaScript中有哪些常用的作用域?</h3><p>常用的作用域主要分为四个类型: 全局作用域、函数作用域、块作用域、动态作用域  </p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">对象</td>
+<td align="center">类型</td>
+</tr>
+<tr>
+<td align="center">window\global</td>
+<td align="center">全局作用域</td>
+</tr>
+<tr>
+<td align="center">function</td>
+<td align="center">函数作用域（局部作用域）</td>
+</tr>
+<tr>
+<td align="center">｛｝</td>
+<td align="center">块作用域</td>
+</tr>
+<tr>
+<td align="center">this</td>
+<td align="center">动态作用域</td>
+</tr>
+</tbody></table>
+<p>如果一个变量或者一个表达式不在当前的作用域,那么JS机制会继续沿着作用域链上查找直到全局作用域,如果找不到将不可以被引用。作用域也可以根据代码层次分层,以便子作用域可以访问父作用域,通常是指沿着链式的作用域查找,而不能从父作用域引用子作用域中的变量和引用。</p>
+<h4 id="全局作用域"><a href="#全局作用域" class="headerlink" title="全局作用域"></a>全局作用域</h4><p><strong>变量在函数或者代码块{}外定义，就是全局作用域。不过在代码块内{}内未定义的变量也是拥有全局作用域的。（不推荐，一般项目里面用了eslint都是不允许通过的）</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span> <span class="comment">/* 全局作用域 */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setNum</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a) <span class="comment">/* 函数内使用 */</span></span><br><span class="line">&#125;</span><br><span class="line">setNum() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>上述代码中变量a是在函数外定义的，a拥有全局作用域。这个变量可以在任意地方被读取或者修改，当然如果变量在函数内没有使用关键字声明，也会变为全局变量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setVar</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  a = <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logNum</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">setVar()</span><br><span class="line">logNum() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>在函数或者代码块内部没有定义的变量实际上都是作为window/global的对象属性存在。但是它和全局变量的区别就是全局变量不可以用delete关键字删除，它可以</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span></span><br><span class="line"><span class="keyword">delete</span> a <span class="comment">/*true*/</span></span><br><span class="line"><span class="keyword">delete</span> b <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="函数作用域（局部作用域）"><a href="#函数作用域（局部作用域）" class="headerlink" title="函数作用域（局部作用域）"></a>函数作用域（局部作用域）</h4><p><strong>在函数内部定义的变量，就是函数作用域。函数作用域内，对外是封闭的，外层无法访问函数内部的作用域</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setVar</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">setVar()</span><br><span class="line"><span class="built_in">console</span>.log(a)<span class="comment">//报错 Uncaught ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想读取函数内部的变量，可以借助return。<br>return关键字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params">b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(test(<span class="number">4</span>)) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params">b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span> </span><br><span class="line">  <span class="keyword">var</span> result = a + b</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">test2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> test2</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">4</span>) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<p>return 是函数对外的接口，return可以返回函数，根据函数作用域的规则，子函数作用域是可以获取函数作用域里的变量的。  </p>
+<h4 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h4><p><strong>在ES6之前，JavaScript是没有块作用域的，但是在ES6后新增了let、const，是块作用域得到普及。什么是块作用域？只需要认识｛｝就可。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">2</span></span><br><span class="line">  <span class="keyword">const</span> b = <span class="number">3</span></span><br><span class="line">  <span class="built_in">console</span>.log(a, b) <span class="comment">/* a:2  b:3*/</span> </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a, b) <span class="comment">// a is not defined</span></span><br></pre></td></tr></table></figure>
+
+<p>if 后{} 这个就是“块”，这个作用域里面定义的变量，外部是无法访问的。</p>
+<h4 id="动态作用域"><a href="#动态作用域" class="headerlink" title="动态作用域"></a>动态作用域</h4><p>在JavaScript中对this的指向时而清楚时而模糊，其实结合作用域全看this就会有一个清晰的理解。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">4</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.num)</span><br><span class="line">&#125;</span><br><span class="line">test() <span class="comment">/*4*/</span></span><br><span class="line">test.call(&#123;<span class="attr">num</span>: <span class="number">5</span>&#125;) <span class="comment">// 5</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的call把this指向了{num:5},而this指向的是当前作用域对象。那么作用域是在代码编写的时候就决定了，还是在代码执行的过程中决定的呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="string">'bibo'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(num)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看上面这段代码，在编写代码的时候就知道了num是全局变量，函数内部使用var、let、const定义的变量就是函数作用域。这个也就是专业术语：词法作用域。也就是说变量的作用域是在定义的时候就决定了，而不是执行的时候决定。因此词法作用域取决于源码，通过静态分析就能确定，所以词法作用域也叫静态作用域。  </p>
+<p>相反，动态作用域就是只能在执行阶段才决定变量的作用域。</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="comment"></div>
+</article>
+<script>
+  new Hitalk({
+    el: '#comment' ,
+    appId: 'VnAjBQDKjiiQGPcIkYu4TGDm-gzGzoHsz',
+    appKey: '1T0fJve6IS0KxGXnCXg6luIl',
+    placeholder: '快来评论吧',
+    path:window.location.pathname,
+    avatar:'mm'
+  });
+</script>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          萌萌哒博客 <a target="_blank" href="https://github.com/George-kiki">George-kiki</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
